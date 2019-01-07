@@ -26,7 +26,7 @@ namespace SIP
         protected string pathHost = System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)) + @"\HostComSip.exe";
         protected FirewallSip _security = new FirewallSip();
 
-        string host = "localhost";
+        string host = "127.0.0.1";
         string user = "root";
         string password = "";
         string database = "sip_absen";

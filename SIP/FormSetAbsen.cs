@@ -19,7 +19,7 @@ namespace SIP
         protected string pathDB = System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)) + @"\myconfig.ini";
         protected FirewallSip _security = new FirewallSip();
 
-        string host = "localhost";
+        string host = "127.0.0.1";
         string user = "root";
         string password = "";
         string database = "sip_absen";
@@ -29,6 +29,8 @@ namespace SIP
         {
             InitializeComponent();
             this.frm = frm;
+
+            GetJamAbsensi();
         }
         protected string Koneksi()
         {
@@ -58,46 +60,12 @@ namespace SIP
         }
         private void btnSimpanIdentitas_Click(object sender, EventArgs e)
         {
-            string connStr = "server=" + host + ";user=" + user + ";database=" + database + ";password=" + password + ";SslMode=" + ssl + ";";
-            MySqlConnection conn = new MySqlConnection(connStr);
-
-            MySqlCommand dbcmd = conn.CreateCommand();
-            string sqlcount = "SELECT COUNT(*) FROM waktu_absen";
-
-            conn.Open();
-
-            dbcmd.CommandText = sqlcount;
-
-            Int32 count = Convert.ToInt32(dbcmd.ExecuteScalar()); //proses menghitung jumlah data(count)
-
-            conn.Close();
-
-            if (count==0)
-            {
-                string sqlinsert = "insert into waktu_absen(mulai_masuk, mulai_selesai, pulang_masuk, pulang_selesai) " + 
-                    "values('" + mulai_masuk.Text + "','" + selesai_masuk.Text + "','" + mulai_pulang.Text + "','" + selesai_pulang.Text + "');";
-                dbcmd.CommandText = sqlinsert;
-
-                try
-                {
-                    
-                    MySqlDataReader MyReader2;
-                    conn.Open();
-                    MyReader2 = dbcmd.ExecuteReader();     // Here our query will be executed and data saved into the database.  
-                    MessageBox.Show("Settingan Absen Berhasil Disimpan");
-
-                    conn.Close();
-                   
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else if(count == 1)
-            {
-                MessageBox.Show("Data Setingan Absen telah disetting. Silahkan kontak admin jika ingin merubah data setingan");
-            }
+            string day = txtSenin.Text;
+            string mm = mulai_masuk.Text;
+            string sm = selesai_masuk.Text;
+            string mp = mulai_pulang.Text;
+            string sp = selesai_pulang.Text;
+            simpanJamAbsensi(day, mm, sm, mp, sp);
         }
         private void FormSekolah_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -113,5 +81,305 @@ namespace SIP
         {
 
         }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker5_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker6_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker8_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker7_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuThinButton22_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker16_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel18_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker14_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker15_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuThinButton24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker13_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bTB_Selasa_Click(object sender, EventArgs e)
+        {
+            string day = txtSelasa.Text;
+            string mm = dTP_MM_Selasa.Text;
+            string sm = dTP_SM_Selasa.Text;
+            string mp = dTP_MP_Selasa.Text;
+            string sp = dTP_SP_Selasa.Text;
+            simpanJamAbsensi(day, mm, sm, mp, sp);
+        }
+
+        private void bTB_Rabu_Click(object sender, EventArgs e)
+        {
+            string day = txtRabu.Text;
+            string mm = dTP_MM_Rabu.Text;
+            string sm = dTP_SM_Rabu.Text;
+            string mp = dTP_MP_Rabu.Text;
+            string sp = dTP_SP_Rabu.Text;
+            simpanJamAbsensi(day, mm, sm, mp, sp);
+        }
+
+        private void bTB_Kamis_Click(object sender, EventArgs e)
+        {
+            string day = txtKamis.Text;
+            string mm = dTP_MM_Kamis.Text;
+            string sm = dTP_SM_Kamis.Text;
+            string mp = dTP_MP_Kamis.Text;
+            string sp = dTP_SP_Kamis.Text;
+            simpanJamAbsensi(day, mm, sm, mp, sp);
+        }
+
+        private void bTB_Jumat_Click(object sender, EventArgs e)
+        {
+            string day = txtJumat.Text;
+            string mm = dTP_MM_Jumat.Text;
+            string sm = dTP_SM_Jumat.Text;
+            string mp = dTP_MP_Jumat.Text;
+            string sp = dTP_SP_Jumat.Text;
+            simpanJamAbsensi(day, mm, sm, mp, sp);
+        }
+
+        private void bTB_Sabtu_Click(object sender, EventArgs e)
+        {
+            string day = txtSabtu.Text;
+            string mm = dTP_MM_Sabtu.Text;
+            string sm = dTP_SM_Sabtu.Text;
+            string mp = dTP_MP_Sabtu.Text;
+            string sp = dTP_SP_Sabtu.Text;
+            simpanJamAbsensi(day, mm, sm, mp, sp);
+        }
+
+        private void simpanJamAbsensi(string hari, string mm, string sm, string mp, string sp)
+        {
+            
+            string connStr = "server=" + host + ";user=" + user + ";database=" + database + ";password=" + password + ";SslMode=" + ssl + ";";
+            MySqlConnection conn = new MySqlConnection(connStr);
+
+            MySqlCommand dbcmd = conn.CreateCommand();
+            string sqlcount = "SELECT COUNT(*) FROM waktu_absen WHERE hari='"+hari+"'";
+
+            conn.Open();
+
+            dbcmd.CommandText = sqlcount;
+
+            Int32 count = Convert.ToInt32(dbcmd.ExecuteScalar()); //proses menghitung jumlah data(count)
+
+            conn.Close();
+
+            if (count == 0)
+            {
+                string sqlinsert = "insert into waktu_absen(mulai_masuk, mulai_selesai, pulang_masuk, pulang_selesai, hari) " +
+                    "values('" + mm + "','" + sm + "','" + mp + "','" + sp + "','" + hari + "');";
+                dbcmd.CommandText = sqlinsert;
+
+                try
+                {
+
+                    MySqlDataReader MyReader2;
+                    conn.Open();
+                    MyReader2 = dbcmd.ExecuteReader();     // Here our query will be executed and data saved into the database.  
+                    MessageBox.Show("Settingan Absen Berhasil Disimpan.");
+
+                    conn.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (count == 1)
+            {
+                string sqlupdate = "UPDATE waktu_absen SET mulai_masuk='"+mm+ "',mulai_selesai='" + sm+ "',pulang_masuk='" + mp+ "',pulang_selesai='" + sp+ "' WHERE hari='"+hari+"'";
+                dbcmd.CommandText = sqlupdate;
+                MySqlDataReader MyReader2;
+                conn.Open();
+                MyReader2 = dbcmd.ExecuteReader();
+                //dbcmd.ExecuteNonQuery();
+                MessageBox.Show("Data Setingan Absen telah diperbarui.");
+                conn.Close();
+                //MessageBox.Show("Data Setingan Absen telah disetting. Silahkan kontak admin jika ingin merubah data setingan");
+            }
+
+            GetJamAbsensi();
+        }
+
+        private void GetJamAbsensi()
+        {
+            string connStr = "server=" + host + ";user=" + user + ";database=" + database + ";password=" + password + ";SslMode=" + ssl + ";";
+            MySqlConnection conn = new MySqlConnection(connStr);
+            MySqlCommand dbcmd = conn.CreateCommand();
+            string findSenin = "SELECT * FROM waktu_absen WHERE hari='2'";
+            string findSelasa = "SELECT * FROM waktu_absen WHERE hari='3'";
+            string findRabu = "SELECT * FROM waktu_absen WHERE hari='4'";
+            string findKamis = "SELECT * FROM waktu_absen WHERE hari='5'";
+            string findJumat = "SELECT * FROM waktu_absen WHERE hari='6'";
+            string findSabtu = "SELECT * FROM waktu_absen WHERE hari='7'";
+
+            dbcmd.CommandText = findSenin;
+            conn.Open();
+            var r_Senin = dbcmd.ExecuteReader();
+            if (r_Senin.HasRows)
+            {
+                r_Senin.Read();
+
+                mulai_masuk.Text = Convert.ToString(r_Senin[1]);
+                selesai_masuk.Text = Convert.ToString(r_Senin[2]);
+                mulai_pulang.Text = Convert.ToString(r_Senin[3]);
+                selesai_pulang.Text = Convert.ToString(r_Senin[4]);
+
+            }
+            conn.Close();
+            dbcmd.CommandText = findSelasa;
+            conn.Open();
+            var r_Selasa = dbcmd.ExecuteReader();
+            if (r_Selasa.HasRows)
+            {
+                r_Selasa.Read();
+
+                dTP_MM_Selasa.Text = Convert.ToString(r_Selasa[1]);
+                dTP_SM_Selasa.Text = Convert.ToString(r_Selasa[2]);
+                dTP_MP_Selasa.Text = Convert.ToString(r_Selasa[3]);
+                dTP_SP_Selasa.Text = Convert.ToString(r_Selasa[4]);
+
+            }
+            conn.Close();
+            dbcmd.CommandText = findRabu;
+            conn.Open();
+            var r_Rabu = dbcmd.ExecuteReader();
+            if (r_Rabu.HasRows)
+            {
+                r_Rabu.Read();
+
+                dTP_MM_Rabu.Text = Convert.ToString(r_Rabu[1]);
+                dTP_SM_Rabu.Text = Convert.ToString(r_Rabu[2]);
+                dTP_MP_Rabu.Text = Convert.ToString(r_Rabu[3]);
+                dTP_SP_Rabu.Text = Convert.ToString(r_Rabu[4]);
+
+            }
+            conn.Close();
+            dbcmd.CommandText = findKamis;
+            conn.Open();
+            var r_Kamis = dbcmd.ExecuteReader();
+            if (r_Kamis.HasRows)
+            {
+                r_Kamis.Read();
+
+                dTP_MM_Kamis.Text = Convert.ToString(r_Kamis[1]);
+                dTP_SM_Kamis.Text = Convert.ToString(r_Kamis[2]);
+                dTP_MP_Kamis.Text = Convert.ToString(r_Kamis[3]);
+                dTP_SP_Kamis.Text = Convert.ToString(r_Kamis[4]);
+
+            }
+            conn.Close();
+            dbcmd.CommandText = findJumat;
+            conn.Open();
+            var r_Jumat = dbcmd.ExecuteReader();
+            if (r_Jumat.HasRows)
+            {
+                r_Jumat.Read();
+
+                dTP_MM_Jumat.Text = Convert.ToString(r_Jumat[1]);
+                dTP_SM_Jumat.Text = Convert.ToString(r_Jumat[2]);
+                dTP_MP_Jumat.Text = Convert.ToString(r_Jumat[3]);
+                dTP_SP_Jumat.Text = Convert.ToString(r_Jumat[4]);
+
+            }
+            conn.Close();
+            dbcmd.CommandText = findSabtu;
+            conn.Open();
+            var r_Sabtu = dbcmd.ExecuteReader();
+            if (r_Sabtu.HasRows)
+            {
+                r_Sabtu.Read();
+
+                dTP_MM_Sabtu.Text = Convert.ToString(r_Sabtu[1]);
+                dTP_SM_Sabtu.Text = Convert.ToString(r_Sabtu[2]);
+                dTP_MP_Sabtu.Text = Convert.ToString(r_Sabtu[3]);
+                dTP_SP_Sabtu.Text = Convert.ToString(r_Sabtu[4]);
+
+            }
+            conn.Close();
+
+        }
+
     }
 }

@@ -125,6 +125,7 @@
             this.MinimizeBox = false;
             this.Name = "FormSekolah";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSekolah_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

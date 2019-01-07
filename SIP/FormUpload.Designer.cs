@@ -96,6 +96,7 @@
             this.Name = "FormUpload";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Upload";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
